@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://www.purebasic.com/namespace" version="1.0" creator="PureBasic 5.72 (Windows - x64)">
+  <section name="config">
+    <options closefiles="1" openmode="0" name="PixelTool"/>
+    <comment>A collection of pixel function to process batch of image in a simple CLI</comment>
+  </section>
+  <section name="data">
+    <explorer view="C:\ProgramData\PureBasic\Examples\" pattern="0"/>
+    <log show="1"/>
+    <lastopen date="2020-05-27 15:40" user="Poshu" host="DESKTOP-OAVFHN7"/>
+  </section>
+  <section name="files">
+    <file name="main.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="+"/>
+      <fingerprint md5="f1ded75e9d5c50c815c52a5008797972"/>
+    </file>
+    <file name="includes\general.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
+      <fingerprint md5="bfcecc456f9df7a5d846b7377132ed2b"/>
+    </file>
+  </section>
+  <section name="targets">
+    <target name="Default Target" enabled="1" default="1">
+      <inputfile value="main.pbi"/>
+      <outputfile value="PixelTool.exe"/>
+      <options debug="1"/>
+      <format exe="console" cpu="0"/>
+    </target>
+  </section>
+</project>
