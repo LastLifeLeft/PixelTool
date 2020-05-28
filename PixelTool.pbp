@@ -3,27 +3,36 @@
 <project xmlns="http://www.purebasic.com/namespace" version="1.0" creator="PureBasic 5.72 (Windows - x64)">
   <section name="config">
     <options closefiles="1" openmode="0" name="PixelTool"/>
-    <comment>A collection of pixel function to process batch of image in a simple CLI</comment>
+    <comment>A collection of image filters to process batch of image in a simple CLI.</comment>
   </section>
   <section name="data">
     <explorer view="C:\ProgramData\PureBasic\Examples\" pattern="0"/>
     <log show="1"/>
-    <lastopen date="2020-05-27 15:40" user="Poshu" host="DESKTOP-OAVFHN7"/>
+    <lastopen date="2020-05-28 22:43" user="Poshu" host="DESKTOP-OAVFHN7"/>
   </section>
   <section name="files">
-    <file name="main.pbi">
-      <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="+"/>
-      <fingerprint md5="f1ded75e9d5c50c815c52a5008797972"/>
-    </file>
     <file name="includes\general.pbi">
       <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
-      <fingerprint md5="bfcecc456f9df7a5d846b7377132ed2b"/>
+      <fingerprint md5="1a8f933fd4dbee0fa4192e24e6de98d5"/>
+    </file>
+    <file name="libraries\filters.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
+      <fingerprint md5="11f4c99e75c00bbc6200bccab64564e4"/>
+    </file>
+    <file name="libraries\utilities.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
+      <fingerprint md5="4a2e0c09f231ce23f8e639a1b92a36a7"/>
+    </file>
+    <file name="main.pbi">
+      <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="+"/>
+      <fingerprint md5="15869b301ee4da672edd91af36e4e9d7"/>
     </file>
   </section>
   <section name="targets">
     <target name="Default Target" enabled="1" default="1">
       <inputfile value="main.pbi"/>
       <outputfile value="PixelTool.exe"/>
+      <commandline value="&quot;C:\Users\Poshu\Desktop\Tikki\Render\dance&quot;"/>
       <options debug="1"/>
       <format exe="console" cpu="0"/>
     </target>
