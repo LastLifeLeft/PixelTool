@@ -64,7 +64,7 @@ Module General
 					Case "_outline" ;{
 						AddElement(JobList())
 						AddElement(JobList()\argument())
-						JobList()\job = @FixAlpha()
+						JobList()\job = @Outline()
 						
 						_Parameter = ProgramParameter(_Index + 1)
 						
@@ -115,7 +115,7 @@ Module General
 				
 				While NextElement(JobList())
 					ConsoleColor(8,0)
-					Print("● Job #" + ListSize(JobList()) + " : ")
+					Print("● Job #" + Str(1 + ListIndex(JobList())) + " : ")
 					ConsoleColor(7,0)
 					CallFunctionFast(JobList()\job, JobList()\argument())
 				Wend
@@ -175,7 +175,7 @@ Module General
 		ForEach FileList()
 			If LoadImage(0,FileList())
 				Filters::FixAlpha(0,Threshold)
-				SaveImage(0, FileList(),#PB_ImagePlugin_PNG,0,32)
+				;SaveImage(0, FileList(),#PB_ImagePlugin_PNG,0,32)
 				FreeImage(0)
 				Print(".")
 			Else
@@ -184,6 +184,7 @@ Module General
 				DeleteElement(FileList())
 			EndIf
 		Next
+		PrintN("")
 	EndProcedure
 	
 	Procedure Trim_(Margin)
@@ -191,7 +192,23 @@ Module General
 	EndProcedure
 	
 	Procedure Outline(Color)
+		Print("Draw a #" + RSet(Hex(Color), 6, "0")  + " outline ")
 		
+		ForEach FileList()
+			If LoadImage(0,FileList())
+				Filters::Outline(0,Color)
+				;SaveImage(0, FileList(),#PB_ImagePlugin_PNG,0,32)
+				SaveImage(0, "D:\poshu\Documents\test.png",#PB_ImagePlugin_PNG,0,32)
+				FreeImage(0)
+				Print(".")
+				End
+			Else
+				PrintN("")
+				PrintN("Couldn't load "+FileList())
+				DeleteElement(FileList())
+			EndIf
+		Next
+		PrintN("")
 	EndProcedure
 	
 	Procedure Flip(Direction)
@@ -200,7 +217,7 @@ Module General
 	
 EndModule
 ; IDE Options = PureBasic 5.72 (Windows - x64)
-; CursorPosition = 176
-; FirstLine = 119
-; Folding = -f+
+; CursorPosition = 195
+; FirstLine = 137
+; Folding = --+
 ; EnableXP
