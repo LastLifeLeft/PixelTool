@@ -4,6 +4,7 @@
 	;Public functions declaration
 	Declare FixAlpha(Image, Threshold)
 	Declare Outline(Image, Color)
+	Declare TrimImage(List ImageList(), Margin)
 EndDeclareModule
 
 Module filters
@@ -94,6 +95,72 @@ Module filters
 		
 	EndProcedure
 	
+	Procedure TrimImage(List ImageList(), Margin)
+		Protected _Top = ImageHeight(ImageList()) - 1, _Left = ImageWidth(ImageList()) - 1, _Right = 0, _Bottom = 0
+		Protected _Width = _Left, _Height = _Top, X, Y
+		Protected _TempImage
+		
+		
+		
+		ForEach ImageList()
+			StartDrawing(ImageOutput(ImageList()))
+			DrawingMode(#PB_2DDrawing_AllChannels)
+			
+			For Y = 0 To _Height
+				For X = 0 To _Left
+					If Alpha(Point(X,Y))
+						_Left = X
+						Break
+					EndIf
+				Next
+				
+				For X = _Width To _Right Step -1
+					If Alpha(Point(X,Y))
+						_Right = X
+						Break
+					EndIf
+				Next
+			Next
+			
+			For X = 0 To _Width
+				For Y = 0 To _Top
+					If Alpha(Point(X,Y))
+						_Top = Y
+						Break
+					EndIf
+				Next
+				
+				For Y = _Height To _Bottom Step -1
+					If Alpha(Point(X,Y))
+						_Bottom = Y
+						Break
+					EndIf
+				Next
+			Next
+			
+			StopDrawing()
+		Next
+		
+		_Right + Margin
+		_Left - Margin
+		_Bottom + Margin
+		_Top - Margin
+		
+		_Width = _Right - _Left
+		_Height = _Bottom - _Top
+		
+		ForEach ImageList()
+ 			_TempImage = CopyImage(ImageList(), #PB_Any)
+			ResizeImage(ImageList(), _Width, _Height, #PB_Image_Raw)
+			
+			StartDrawing(ImageOutput(ImageList()))
+			DrawingMode(#PB_2DDrawing_AllChannels)
+			DrawImage(ImageID(_TempImage), -_Left, -_Top)
+			StopDrawing()
+			FreeImage(_TempImage)
+		Next
+	EndProcedure
+	
 	;Private functions
 	Procedure FixAlpha_Callback(x, y, SourceColor, TargetColor)
 		
@@ -107,8 +174,27 @@ Module filters
 	EndProcedure
 	
 EndModule
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ; IDE Options = PureBasic 5.72 (Windows - x64)
-; CursorPosition = 87
-; FirstLine = 32
-; Folding = -
+; CursorPosition = 155
+; FirstLine = 82
+; Folding = 8-
 ; EnableXP

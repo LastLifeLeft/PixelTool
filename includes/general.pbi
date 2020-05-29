@@ -43,7 +43,7 @@ Module General
 							JobList()\argument() = Val(_Parameter)
 							_Index + 1
 						Else
-							JobList()\argument() = 122
+							JobList()\argument() = 50
 						EndIf
 						
 						;}
@@ -156,11 +156,11 @@ Module General
 			Print("[color = 000000]")
 			ConsoleColor(7,0)
 			PrintN(~"		: add an outline around the non transparent pixel.")
-			Print("  _flip ")
-			ConsoleColor(8,0)
-			Print("[direction = horizontal]")
-			ConsoleColor(7,0)
-			PrintN(~"	: flip the whole image on the desired axis.")
+; 			Print("  _flip ")
+; 			ConsoleColor(8,0)
+; 			Print("[direction = horizontal]")
+; 			ConsoleColor(7,0)
+; 			PrintN(~"	: flip the whole image on the desired axis.")
 			PrintN("")
 			PrintN("ie: "+#AppName+~".exe \"d:\\images\\to\\process\" _outline FF0000 _flip")
 			;}
@@ -175,7 +175,7 @@ Module General
 		ForEach FileList()
 			If LoadImage(0,FileList())
 				Filters::FixAlpha(0,Threshold)
-				;SaveImage(0, FileList(),#PB_ImagePlugin_PNG,0,32)
+				SaveImage(0, FileList(),#PB_ImagePlugin_PNG,0,32)
 				FreeImage(0)
 				Print(".")
 			Else
@@ -188,7 +188,37 @@ Module General
 	EndProcedure
 	
 	Procedure Trim_(Margin)
+		Protected NewList _ImageList(), _TempImage
+		Print("Trim with " + Margin + "px margin ")
 		
+		ResetList(FileList())
+		
+		While NextElement(FileList())
+			_TempImage = LoadImage(#PB_Any,FileList())
+			If _TempImage
+				AddElement(_ImageList())
+				_ImageList() = _TempImage
+			Else
+				PrintN("")
+				PrintN("Couldn't load "+FileList())
+				DeleteElement(FileList())
+			EndIf
+		Wend
+		
+		Filters::TrimImage(_ImageList(),Margin)
+		
+		ResetList(FileList())
+		ResetList(_ImageList())
+		
+		While NextElement(FileList())
+			NextElement(_ImageList())
+			SaveImage(_ImageList(), FileList(),#PB_ImagePlugin_PNG,0,32)
+			FreeImage(_ImageList())
+			Print(".")
+		Wend
+		
+		PrintN("")
+		FreeList(_ImageList())
 	EndProcedure
 	
 	Procedure Outline(Color)
@@ -197,11 +227,9 @@ Module General
 		ForEach FileList()
 			If LoadImage(0,FileList())
 				Filters::Outline(0,Color)
-				;SaveImage(0, FileList(),#PB_ImagePlugin_PNG,0,32)
-				SaveImage(0, "D:\poshu\Documents\test.png",#PB_ImagePlugin_PNG,0,32)
+				SaveImage(0, FileList(),#PB_ImagePlugin_PNG,0,32)
 				FreeImage(0)
 				Print(".")
-				End
 			Else
 				PrintN("")
 				PrintN("Couldn't load "+FileList())
@@ -217,7 +245,6 @@ Module General
 	
 EndModule
 ; IDE Options = PureBasic 5.72 (Windows - x64)
-; CursorPosition = 195
-; FirstLine = 137
-; Folding = --+
+; CursorPosition = 26
+; Folding = HE+
 ; EnableXP

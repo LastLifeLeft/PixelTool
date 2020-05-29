@@ -8,16 +8,16 @@
   <section name="data">
     <explorer view="C:\ProgramData\PureBasic\Examples\" pattern="0"/>
     <log show="1"/>
-    <lastopen date="2020-05-29 06:30" user="Poshu" host="DESKTOP-OAVFHN7"/>
+    <lastopen date="2020-05-29 08:30" user="Poshu" host="DESKTOP-OAVFHN7"/>
   </section>
   <section name="files">
     <file name="includes\general.pbi">
       <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
-      <fingerprint md5="1c1fa2abf448641e735de8e9eac4c9af"/>
+      <fingerprint md5="a42531a472dda785d620b77b5872de8f"/>
     </file>
     <file name="libraries\filters.pbi">
       <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
-      <fingerprint md5="d4d4bdfc979fbd15201b70e2024e6099"/>
+      <fingerprint md5="c54a0151b09cb729645dfdd31cb6567e"/>
     </file>
     <file name="libraries\utilities.pbi">
       <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
@@ -32,9 +32,23 @@
     <target name="Default Target" enabled="1" default="1">
       <inputfile value="main.pbi"/>
       <outputfile value="PixelTool.exe"/>
-      <commandline value="&quot;C:\Users\Poshu\Desktop\Tikki\Render\dance&quot; _fixalpha 55 _outline 101010"/>
+      <executable value="..\PixelTool.exe"/>
       <options debug="1"/>
       <format exe="console" cpu="0"/>
+      <versioninfo enable="1">
+        <field0 value="1"/>
+        <field1 value="1"/>
+        <field2 value="♥x1"/>
+        <field3 value="PixelTool"/>
+        <field4 value="1"/>
+        <field5 value="1"/>
+        <field6 value="A collection of image filters to process batch of image in a simple CLI."/>
+        <field7 value="PixelTool"/>
+        <field8 value="PixelTool.exe"/>
+        <field14 value="lastlife.games"/>
+        <field15 value="VOS_NT"/>
+        <field16 value="VFT_APP"/>
+      </versioninfo>
     </target>
   </section>
 </project>
