@@ -1,4 +1,7 @@
-﻿IncludePath "libraries"
+﻿UsePNGImageDecoder()
+UsePNGImageEncoder()
+
+IncludePath "libraries"
 IncludeFile "filters.pbi"
 IncludeFile "utilities.pbi"
 

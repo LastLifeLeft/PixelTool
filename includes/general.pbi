@@ -10,16 +10,15 @@ EndDeclareModule
 Module General
 	EnableExplicit
 	;Private data structure	
-	Structure WorkList
-		job.i
+	Structure JobList
+		*job
 		List argument.i()
 	EndStructure
 	
 	Global NewList FileList.s()
-	Global NewList WorkList.WorkList()
+	Global NewList JobList.JobList()
 	
 	;Private functions declaration
-	Declare ParseDirectory(Directory$, FileMask$, List ResultList.s())
 	Declare FixAlpha(Threshold)
 	Declare Trim_(Margin)
 	Declare Outline(Color)
@@ -34,63 +33,67 @@ Module General
 			While _Index <= _ParameterCount
 				Select LCase(ProgramParameter(_Index))
 					Case "_fixalpha" ;{
-						AddElement(WorkList())
-						AddElement(WorkList()\argument())
-						WorkList()\job = @FixAlpha()
+						AddElement(JobList())
+						AddElement(JobList()\argument())
+						JobList()\job = @FixAlpha()
 						
-						If _Index < _ParameterCount And Not ( FileSize(_Parameter) = -2 Or Left(ProgramParameter(_Index + 1), 1) = "_" )
-							WorkList()\argument() =  Round(255 * Val(_Parameter) / 100,#PB_Round_Nearest)
+						_Parameter = ProgramParameter(_Index + 1)
+						
+						If _Index < _ParameterCount And Not ( FileSize(_Parameter) = -2 Or Left(_Parameter, 1) = "_" )
+							JobList()\argument() = Val(_Parameter)
 							_Index + 1
 						Else
-							WorkList()\argument() = 122
+							JobList()\argument() = 122
 						EndIf
+						
 						;}
 					Case "_trim" ;{
-						AddElement(WorkList())
-						AddElement(WorkList()\argument())
-						WorkList()\job = @Trim_()
+						AddElement(JobList())
+						AddElement(JobList()\argument())
+						JobList()\job = @Trim_()
 						
-						If _Index < _ParameterCount And Not ( FileSize(_Parameter) = -2 Or Left(ProgramParameter(_Index + 1), 1) = "_" )
-							WorkList()\argument() =  Val(_Parameter)
+						_Parameter = ProgramParameter(_Index + 1)
+						
+						If _Index < _ParameterCount And Not ( FileSize(_Parameter) = -2 Or Left(_Parameter, 1) = "_" )
+							JobList()\argument() =  Val(_Parameter)
 							_Index + 1
 						Else
-							WorkList()\argument() = 0
+							JobList()\argument() = 0
 						EndIf
 						;}
 					Case "_outline" ;{
-						AddElement(WorkList())
-						AddElement(WorkList()\argument())
-						WorkList()\job = @FixAlpha()
+						AddElement(JobList())
+						AddElement(JobList()\argument())
+						JobList()\job = @FixAlpha()
 						
-						If _Index < _ParameterCount And Not ( FileSize(_Parameter) = -2 Or Left(ProgramParameter(_Index + 1), 1) = "_" )
-							WorkList()\argument() =  Val("$" + _Parameter)
+						_Parameter = ProgramParameter(_Index + 1)
+						
+						If _Index < _ParameterCount And Not ( FileSize(_Parameter) = -2 Or Left(_Parameter, 1) = "_" )
+							JobList()\argument() =  Val("$" + _Parameter)
 							_Index + 1
 						Else
-							WorkList()\argument() = 0
+							JobList()\argument() = 0
 						EndIf
 						;}
 					Case "_flip" ;{
-						AddElement(WorkList())
-						AddElement(WorkList()\argument())
-						WorkList()\job = @Flip()
+						AddElement(JobList())
+						AddElement(JobList()\argument())
+						JobList()\job = @Flip()
 						
-						If _Index < _ParameterCount And Not ( FileSize(_Parameter) = -2 Or Left(ProgramParameter(_Index + 1), 1) = "_" ) And LCase(_Parameter) = "vertical"
-							WorkList()\argument() =  1
+						_Parameter = ProgramParameter(_Index + 1)
+						
+						If LCase(_Parameter) = "vertical"
+							JobList()\argument() =  1
 							_Index + 1
 						Else
-							WorkList()\argument() = 0
+							JobList()\argument() = 0
 						EndIf
 						;}
 					Default ;{
 						_Parameter = ProgramParameter(_Index)
 						If FileSize(_Parameter) = -2
 							
-							ParseDirectory(Trim(_Parameter,~"\""),"png",FileList())
-							Debug "ok!"
-							
-							ForEach FileList()
-								Debug FileList()
-							Next
+							Utilities::ParseDirectory(Trim(_Parameter,~"\""),"png",FileList())
 							
 						Else
 							PrintN(#AppName + " unknown parameter: " + _Parameter)
@@ -102,6 +105,27 @@ Module General
 				_Index + 1
 				
 			Wend
+			
+			If ListSize(FileList())
+				PrintN(Str(ListSize(JobList())) + " jobs to perform on " + Str(ListSize(FileList())) + " images.")
+				
+				ResetList(JobList())
+				
+				EnableGraphicalConsole(#True)
+				
+				While NextElement(JobList())
+					ConsoleColor(8,0)
+					Print("● Job #" + ListSize(JobList()) + " : ")
+					ConsoleColor(7,0)
+					CallFunctionFast(JobList()\job, JobList()\argument())
+				Wend
+				
+				EnableGraphicalConsole(#False)
+				
+			Else
+				PrintN(#AppName + " couldn't find any image To process")
+			EndIf
+			
 		Else ;{ Display manual 
 			ConsoleColor(7,0)
 
@@ -143,43 +167,23 @@ Module General
 		EndIf
 	EndProcedure
 	
-	;Private functions
-	Procedure ParseDirectory(Directory$, FileMask$, List ResultList.s())
-		Protected _DirectoryID, _EntryName.s
-		
-		If Not (Right(Directory$, 1) = "\" Or Right(Directory$, 1) = "/")
-			Directory$ + "/"
-		EndIf
-		
-		_DirectoryID = ExamineDirectory(#PB_Any, Directory$, "*")
-		If _DirectoryID
-			While NextDirectoryEntry(_DirectoryID)
-				
-				_EntryName = DirectoryEntryName(_DirectoryID)
-				
-				
-				If _EntryName = "." Or _EntryName = ".."
-					Continue
-				EndIf
-				
-				_EntryName = Directory$ + _EntryName
-				
-				If FileSize(_EntryName) = -2
-					ParseDirectory(_EntryName, FileMask$, ResultList())
-				ElseIf FindString(FileMask$, GetExtensionPart(_EntryName))
-					AddElement(ResultList())
-					ResultList() = _EntryName
-				EndIf
-				
-			Wend
-			
-			FinishDirectory(_DirectoryID)
-		EndIf
-		
-	EndProcedure
-	
+	;Private functions	
 	Procedure FixAlpha(Threshold)
+		Print("FixAlpha with " + Threshold + "% threshold ")
+		Threshold = Round(255 * Threshold / 100,#PB_Round_Nearest)
 		
+		ForEach FileList()
+			If LoadImage(0,FileList())
+				Filters::FixAlpha(0,Threshold)
+				SaveImage(0, FileList(),#PB_ImagePlugin_PNG,0,32)
+				FreeImage(0)
+				Print(".")
+			Else
+				PrintN("")
+				PrintN("Couldn't load "+FileList())
+				DeleteElement(FileList())
+			EndIf
+		Next
 	EndProcedure
 	
 	Procedure Trim_(Margin)
@@ -196,6 +200,7 @@ Module General
 	
 EndModule
 ; IDE Options = PureBasic 5.72 (Windows - x64)
-; CursorPosition = 2
-; Folding = Ho9
+; CursorPosition = 176
+; FirstLine = 119
+; Folding = -f+
 ; EnableXP

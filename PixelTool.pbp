@@ -8,31 +8,31 @@
   <section name="data">
     <explorer view="C:\ProgramData\PureBasic\Examples\" pattern="0"/>
     <log show="1"/>
-    <lastopen date="2020-05-28 22:43" user="Poshu" host="DESKTOP-OAVFHN7"/>
+    <lastopen date="2020-05-29 04:52" user="Poshu" host="DESKTOP-OAVFHN7"/>
   </section>
   <section name="files">
     <file name="includes\general.pbi">
       <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
-      <fingerprint md5="1a8f933fd4dbee0fa4192e24e6de98d5"/>
+      <fingerprint md5="a59a3823dafaba214cebff8f4e9f91ab"/>
     </file>
     <file name="libraries\filters.pbi">
       <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
-      <fingerprint md5="11f4c99e75c00bbc6200bccab64564e4"/>
+      <fingerprint md5="09979ea17c32decd4afe481a485db29b"/>
     </file>
     <file name="libraries\utilities.pbi">
       <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="++"/>
-      <fingerprint md5="4a2e0c09f231ce23f8e639a1b92a36a7"/>
+      <fingerprint md5="b1c72aaa2013b69c33dc06b40d095ece"/>
     </file>
     <file name="main.pbi">
       <config load="0" scan="1" panel="1" warn="1" lastopen="1" panelstate="+"/>
-      <fingerprint md5="15869b301ee4da672edd91af36e4e9d7"/>
+      <fingerprint md5="99270882c865dbad7dc72653fd5cef4a"/>
     </file>
   </section>
   <section name="targets">
     <target name="Default Target" enabled="1" default="1">
       <inputfile value="main.pbi"/>
       <outputfile value="PixelTool.exe"/>
-      <commandline value="&quot;C:\Users\Poshu\Desktop\Tikki\Render\dance&quot;"/>
+      <commandline value="&quot;C:\Users\Poshu\Desktop\Tikki\Render\dance&quot; _fixalpha 55"/>
       <options debug="1"/>
       <format exe="console" cpu="0"/>
     </target>
