@@ -9,8 +9,6 @@ IncludePath "includes"
 IncludeFile "general.pbi"
 
 General::Init()
-
-Input()
 ; IDE Options = PureBasic 5.72 (Windows - x64)
-; CursorPosition = 2
+; CursorPosition = 10
 ; EnableXP

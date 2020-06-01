@@ -100,8 +100,6 @@ Module filters
 		Protected _Width = _Left, _Height = _Top, X, Y
 		Protected _TempImage
 		
-		
-		
 		ForEach ImageList()
 			StartDrawing(ImageOutput(ImageList()))
 			DrawingMode(#PB_2DDrawing_AllChannels)
@@ -146,8 +144,8 @@ Module filters
 		_Bottom + Margin
 		_Top - Margin
 		
-		_Width = _Right - _Left
-		_Height = _Bottom - _Top
+		_Width = _Right - _Left + 1
+		_Height = _Bottom - _Top + 1
 		
 		ForEach ImageList()
  			_TempImage = CopyImage(ImageList(), #PB_Any)
@@ -194,7 +192,7 @@ EndModule
 
 
 ; IDE Options = PureBasic 5.72 (Windows - x64)
-; CursorPosition = 155
-; FirstLine = 82
+; CursorPosition = 101
+; FirstLine = 75
 ; Folding = 8-
 ; EnableXP

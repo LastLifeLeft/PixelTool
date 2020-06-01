@@ -163,6 +163,8 @@ Module General
 ; 			PrintN(~"	: flip the whole image on the desired axis.")
 			PrintN("")
 			PrintN("ie: "+#AppName+~".exe \"d:\\images\\to\\process\" _outline FF0000 _flip")
+			
+			Input()
 			;}
 		EndIf
 	EndProcedure
@@ -245,6 +247,7 @@ Module General
 	
 EndModule
 ; IDE Options = PureBasic 5.72 (Windows - x64)
-; CursorPosition = 26
+; CursorPosition = 166
+; FirstLine = 70
 ; Folding = HE+
 ; EnableXP
